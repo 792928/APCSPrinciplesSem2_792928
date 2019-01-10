@@ -12,7 +12,7 @@ function setup() {
   fill(200, 30, 150);
   console.log(txt);
 // bubbleSort();
-selectionSort();
+mySort();
 console.log(txt);
 
 }
@@ -34,19 +34,19 @@ console.log(txt);
 //
 //
 //     }
-function selectionSort(){
-  var minIdx, temp,
+function mySort(){
+  var min, temp,
       len = txt.length;
   for(var i = 0; i < len; i++){
-    minIdx = i;
+    min = i;
     for(var  j = i+1; j<len; j++){
-       if(txt[j]<txt[minIdx]){
-          minIdx = j;
+       if(txt[j]<txt[min]){
+          min = j;
        }
     }
     temp = txt[i];
-    txt[i] = txt[minIdx];
-    txt[minIdx] = temp;
+    txt[i] = txt[min];
+    txt[min] = temp;
   }
   return txt;
 }
