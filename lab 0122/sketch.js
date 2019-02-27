@@ -1,100 +1,108 @@
 var data = [];
-var sortBy = "total";
-var bigTotal = 0;
-
 function preload(){
   data = loadJSON("population.json");
 }
 
+
 function setup() {
-  bubble();
+  //canvas
+  var cnv = createCanvas(1000, 2250);
+  cnv.position((windowWidth-width)/2, 30);
+  background(5, 5, 5);
+  //text size and location
+  textSize(10);
+  textAlign(CENTER, CENTER);
+
+  organize();
 }
+
 
 function draw() {
 }
 
-function bubble(){
+
+function organize(){
   var temp;
-  if(sortBy = "total"){
-    for (var i = 1; i < data.countrydata.length; i++){
-      for(var j = i; j > 0; j--){
-        if(data.countrydata[j].total < data.countrydata[j-1].total){
-          temp = data.countrydata[j];
-          data.countrydata[j] = data.countrydata[j-1];
-          data.countrydata[j-1] = temp;
-        }
+  for (var i = 1; i < data.countrydata.length; i++){
+    for(var j = i; j > 0; j--){
+
+      if(data.countrydata[j].total < data.countrydata[j-1].total){
+        temp = data.countrydata[j];
+        data.countrydata[j] = data.countrydata[j-1];
+        data.countrydata[j-1] = temp;
       }
     }
   }
-  if(sortBy = "females"){
-    for (var i = 1; i < data.countrydata.length; i++){
-      for(var j = i; j > 0; j--){
-        if(data.countrydata[j].females < data.countrydata[j-1].females){
-          temp = data.countrydata[j];
-          data.countrydata[j] = data.countrydata[j-1];
-          data.countrydata[j-1] = temp;
-        }
-      }
-    }
-  }
-  if(sortBy = "males"){
-    for (var i = 1; i < data.countrydata.length; i++){
-      for(var j = i; j > 0; j--){
-        if(data.countrydata[j].males < data.countrydata[j-1].males){
-          temp = data.countrydata[j];
-          data.countrydata[j] = data.countrydata[j-1];
-          data.countrydata[j-1] = temp;
-        }
-      }
-    }
-  }
-  console.log(data);
-  barGraph();
+  drawWords();
+  check();
+  bars();
 }
 
-function representCircle(){
- for(var i = 1; i < data.countrydata.length; i++){
-   bigTotal = bigTotal + data.countrydata[i].total;
- }
- var lastAngle = 0;
- for(var i = 0; i < data.countrydata.length; i ++){
-   var angle = ((data.countrydata[i].total / bigTotal) * (2 * PI));
-   fill(0, 0, 10*i);
-   arc(300, 300, 500, 500, lastAngle, lastAngle + angle);
-   lastAngle += angle
- }
+
+function drawWords(){
+  textAlign(LEFT);
+  //titles of all of the sections
+  fill(255, 255, 255);
+  text("Countries", 100, 10);
+  text("Totals", 300, 10);
+  text("Males", 500, 10);
+  text("Females", 700, 10);
+  fill(70, 170, 0);
+  for(var i = 1; i < data.countrydata.length; i++){
+    text(data.countrydata[i].country, 100, 10 + (i*10));
+  }
+  //representation of the total data
+  fill(200, 100, 100);
+  for(var i = 1; i < data.countrydata.length; i++){
+    text(data.countrydata[i].total, 300, 10 + (i*10));
+  }
+  //representation of male data
+  fill(100, 0, 60);
+  for(var i = 1; i < data.countrydata.length; i++){
+    text(data.countrydata[i].males, 500, 10 + (i*10));
+  }
+  //representation of female
+  fill(200, 70, 2);
+  for(var i = 1; i < data.countrydata.length; i++){
+    text(data.countrydata[i].females, 700, 10 + (i*10));
+  }
 }
 
-function barGraph() {
-  var width = 200, // canvas width and height
-      height = 350,
-      margin = 20,
-      w = width - 2 * margin, // chart area width and height
-      h = height - 2 * margin;
 
-  var barWidth =  (h / data.countrydata.length) * 0.8; // width of bar
-  var barMargin = (h / data.countrydata.length) * 0.2; // margin between two bars
-
-  createCanvas(width, height);
-
-  textSize(14);
-
-  push();
-  translate(margin, margin); // ignore margin area
-
-  for(var i=0; i < data.countrydata.length; i++) {
-    console.log("in")
-    push();
-    fill('steelblue');
-    noStroke();
-    translate(0, i* (barWidth + barMargin)); // jump to the top right corner of the bar
-    rect(0, 0, data.countrydata[i], barWidth); // draw rect
-
-    fill('#FFF');
-    text(data.countrydata[i], 5, barWidth/2 + 5); // write data
-
-    pop();
+function check(){
+  for(var i = 1; i < data.countrydata.length; i++){
+    console.log(data.countrydata[i].total);
   }
+}
 
-  pop();
+function bars(){
+  var allTotal = 0;
+  var allMale = 0;
+  var allFemale = 0;
+  for(var i = 1; i < data.countrydata.length; i++){
+    allTotal = allTotal + data.countrydata[i].total;
+    allMale = allMale + data.countrydata[i].males;
+    allFemale = allFemale + data.countrydata[i].females;
+  }
+  //total data in bar graph
+  for(var i = 1; i < data.countrydata.length; i++){
+    var size = (data.countrydata[i].total / allTotal) * (100);
+    console.log(size + "size");
+    fill(200, 55, 0);
+    rect(350, 10 + (i*10), size*5, 10);
+  }
+  //the male data in bar graph
+  for(var i = 1; i < data.countrydata.length; i++){
+    var size = (data.countrydata[i].males / allMale) * (100);
+    console.log(size + "size");
+    fill(10, 80, 60);
+    rect(550, 10 + (i*10), size*5, 10);
+  }
+  //the female data in bar graph
+  for(var i = 1; i < data.countrydata.length; i++){
+    var size = (data.countrydata[i].females / allFemale) * (100);
+    console.log(size + "size");
+    fill(20, 70, 2);
+    rect(750, 10 + (i*10), size*5, 10);
+  }
 }
