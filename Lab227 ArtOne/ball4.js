@@ -18,13 +18,13 @@ this.update = function(){
     if(d<450){
       var attForce = p5.Vector.sub(b1.loc, this.loc);
       attForce.normalize();
-      attForce.mult(.03);
+      attForce.mult(.02);
       this.vel.add(attForce)
     }
     if(d < 85){
       var repForce = p5.Vector.sub(this.loc, b1.loc,);
       repForce.normalize();
-      repForce.mult(.03);
+      repForce.mult(50);
       this.vel.add(repForce)
     }
   } else{       //move red ball
@@ -42,8 +42,8 @@ this.checkEdges = function(){
   if(this.loc.y > height) this.vel.y = -this.vel.y
 }
   this.render = function(){
-    stroke(255,69,69,100);
-    line(this.loc.x, this.loc.y,this.loc.x,this.loc.y);
+    fill(this.col,10);
+    triangle(this.loc.x, this.loc.y, 300, 300, 500, 500);
 
 }
 }
