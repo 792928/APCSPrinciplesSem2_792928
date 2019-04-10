@@ -22,7 +22,7 @@ function Paddle (loc, vel, width,length,col){
   // changes the location of the boid //
   //  adds speed to x and y
   this.update = function(){ //attraction
-    paddleLength = width/2
+    paddleLength = width/2;
       this.loc.x = lerp (this.loc.x, mouseX-paddleLength,.15);
     }
 

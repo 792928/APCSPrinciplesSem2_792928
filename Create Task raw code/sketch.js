@@ -7,6 +7,7 @@ var paddle;
 var a=0;
 var start = false;
 var game = false;
+var z;
 
 function setup() {
   var cnv = createCanvas(800, 800);
@@ -16,19 +17,20 @@ function setup() {
   paddle = new Paddle (createVector (width/2,700), createVector (-.1,.1), 200,15, color(255,0,255)); //creates paddle
 
    loadBalls(1);
-   loadBricks(20);
+
+   //loadBricks(20);
 }
-function loadBricks (numBricks){ // loads all the balls in the array and creates new balls for the array
-  for (var i = 0; i < numBricks; i++ ){
-    for (var row = 0; row < numBricks; row++)
-    var b = 50;
-    var z = 50;
-    var loc = createVector(b, z);
-    var rad = 50;
-    var col = color(50, 70, 230);
-	var brick = new Brick (loc, rad, col);
-	bricks.push(brick);
-}}
+// function loadBricks (numBricks){ // loads all the balls in the array and creates new balls for the array
+//   for(var r = 0; i < numBricks; r++){
+//     var z = 50
+//   for (var i = 0; i < 14; i++ ){
+//     var b = 50+ i*50;
+//     var loc = createVector(b, z);
+//     var rad = 50;
+//     var col = color(50, 70, 230);
+// 	var brick = new Brick (loc, rad, col);
+// 	bricks.push(brick);
+// }}}
 function loadBalls (numBalls){ // loads all the balls in the array and creates new balls for the array
   for (var i = 0; i < numBalls; i++){
     var loc = createVector(random(0,800), 20);
@@ -38,7 +40,6 @@ function loadBalls (numBalls){ // loads all the balls in the array and creates n
 	var ball = new Ball (loc, vel,rad, col);
 	balls.push(ball);
   }
-
 }
 if(start===false){
 function mouseClicked() {
@@ -49,7 +50,15 @@ start=true
 
 //  The draw function is called
 function draw() {
-
+  if(score === 5 && balls.length === 1){
+    loadBalls(1);
+  }
+  if(score === 10 && balls.length === 2){
+    loadBalls(1);
+  }
+  if(score === 15 && balls.length === 3){
+    loadBalls(1);
+  }
 
 if(start===false){
   fill(25,25,25);
@@ -101,6 +110,7 @@ for (var i = 0; i < balls.length; i++){
       ballA.vel.y = -ballA.vel.y;
 
       score = score + 1;
+      z = z + 10
     //  if(balls.length === 0){
 
     //  }
@@ -128,6 +138,6 @@ if(game===true){
     text("Ctrl + R to restart", 280, 400);
     fill(190,100,125);
     textSize(15);
-    text("u dum", 280, 370);
+    text("You Lost", 280, 370);
 
 }}
