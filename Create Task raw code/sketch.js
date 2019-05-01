@@ -67,7 +67,7 @@ if(start===false){
   rect(212, 212, 375, 375);
   fill(190,100,125);
   textSize(40);
-  text("Ballz to the Wall", 280, 400);
+  text("Paddle Ball", 280, 400);
   fill(190,100,125);
   textSize(15);
   text("Click to Start", 280, 370);
